@@ -66,8 +66,8 @@ async function loadData(url) {
     L.geoJSON(geojson, {
         pointToLayer: function (geoJsonPoint, latlng) {
             let popup = `
-        Name: <strong>${geoJsonPoint.properties.name}</strong><br>
-        Meereshöhe: <strong>${geoJsonPoint.geometry.coordinates[2]} m üNN</strong><br>
+            <strong>Name</strong>: ${geoJsonPoint.properties.name}<br>
+            <strong>Meereshöhe</strong>: <strong>${geoJsonPoint.geometry.coordinates[2]} m üNN
         `
             return L.marker(latlng, {
                 icon: L.icon({
@@ -81,5 +81,4 @@ async function loadData(url) {
 
     // Wetterstationen mit Icons und Popups implementieren
 }
-
 loadData("https://static.avalanche.report/weather_stations/stations.geojson");
