@@ -61,17 +61,13 @@ async function loadData(url) {
     let geojson = await response.json();
 
     //AUFGABE START
-    console.log(url);
-
-    let overlay = L.featureGroup();
-    layerControl.addOverlay(overlay, "Wetterstationen");
-    overlay.addTo(map);
+    //console.log(url);
 
     L.geoJSON(geojson, {
         pointToLayer: function (geoJsonPoint, latlng) {
             let popup = `
         Name: <strong>${geoJsonPoint.properties.name}</strong><br>
-        Meereshöhe: ${geoJsonPoint.properties.coordinates[2]}<br>
+        Meereshöhe: <strong>${geoJsonPoint.geometry.coordinates[2]}</strong><br>
         `
             return L.marker(latlng, {
                 icon: L.icon({
@@ -79,7 +75,7 @@ async function loadData(url) {
                 })
             }).bindPopup(popup);
         }
-    }).addTo(overlay);
+    }).addTo(overlays.stations);
 
     //AUFGABE ENDE
 
