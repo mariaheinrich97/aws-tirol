@@ -83,12 +83,15 @@ let drawTemperature = function(geojson) {
             <strong>Name</strong>: ${geoJsonPoint.properties.name}<br>
             <strong>Meereshöhe</strong>: ${geoJsonPoint.geometry.coordinates[2]} m üNN
         `
+        // divIcon 
             return L.marker(latlng, {
-                icon: L.icon({
-                    iconUrl: "icons/wifi.png",
-                    iconAnchor: [16, 37],
-                    popupAnchor: [0, -37]
+                icon: L.divIcon({
+                    className: "aws-div-icon",
+                    html: `<span>${geoJsonPoint.properties.LT}</span>`
+
                 })
+                // aws = Automatische Wetterstationen
+                // span 
             }).bindPopup(popup);
         }
     }).addTo(overlays.temperature);
