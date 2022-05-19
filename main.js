@@ -56,7 +56,7 @@ L.control.fullscreen().addTo(map);
 overlays.temperature.addTo(map);
 
 // Wetterstationen mit Icons und Popups
-let drawStations = function(geojson) {
+let drawStations = function (geojson) {
 
     L.geoJSON(geojson, {
         pointToLayer: function (geoJsonPoint, latlng) {
@@ -75,23 +75,28 @@ let drawStations = function(geojson) {
     }).addTo(overlays.stations);
 }
 
-let drawTemperature = function(geojson) {
-
+let drawTemperature = function (geojson) {
     L.geoJSON(geojson, {
+        filter: function (geoJsonPoint) {
+            if (geoJsonPoint.properties.LT > -50 && geoJsonPoint.properties.LT < 50) {
+                return true;
+            }
+        },
         pointToLayer: function (geoJsonPoint, latlng) {
             let popup = `
             <strong>Name</strong>: ${geoJsonPoint.properties.name}<br>
             <strong>Meereshöhe</strong>: ${geoJsonPoint.geometry.coordinates[2]} m üNN
         `
-        // divIcon 
+            // divIcon 
             return L.marker(latlng, {
                 icon: L.divIcon({
                     className: "aws-div-icon",
-                    html: `<span>${geoJsonPoint.properties.LT}</span>`
+                    html: `<span>${geoJsonPoint.properties.LT.toFixed(1)}</span>`
                 })
                 // aws = Automatische Wetterstationen
                 // span : Inhalt wird einfach auf Karte geschrieben
                 // Formatierung im main.css
+                // toFixed(1): Nachkommastellen > Problem: undefined
             }).bindPopup(popup);
         }
     }).addTo(overlays.temperature);
