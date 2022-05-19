@@ -168,13 +168,14 @@ let drawSnowheight = function (geojson) {
 let drawWind = function (geojson) {
     L.geoJSON(geojson, {
         filter: function (geoJsonPoint) {
-            if (geoJsonPoint.properties.WG >= 0 && geoJsonPoint.properties.WG < 1500) {
+            if (geoJsonPoint.properties.WG >= 0 && geoJsonPoint.properties.WG < 1500 && 
+                geoJsonPoint.properties.WR >= 0 &&geoJsonPoint.properties.WR <= 360) {
                 return true;
             }
         },
         pointToLayer: function (geoJsonPoint, latlng) {
             let popup = `
-            <strong>Name</strong>: ${geoJsonPoint.properties.name}<br>
+            <strong>Stationsname</strong>: ${geoJsonPoint.properties.name}<br>
             <strong>Meereshöhe</strong>: ${geoJsonPoint.geometry.coordinates[2]} m üNN
         `
             // Farbe aufrufen auf getColor (s.oben) für jeden wert die passende Farbe
@@ -188,16 +189,22 @@ let drawWind = function (geojson) {
             //L.marker(latlng).addTo(map);
 
             // divIcon 
+            let deg = geoJsonPoint.properties.WR;
+            console.log(deg);
 
             return L.marker(latlng, {
                 icon: L.divIcon({
                     className: "aws-div-icon",
-                    html: `<span style = "background-color: ${color}">${geoJsonPoint.properties.WG.toFixed(1)}</span>`
+                    html: `<span style = "background-color: ${color}; transform: rotate(${deg}deg)"
+                    <i class="fas fa-arrow-up"></i> <br>
+                    <br>
+                    ${geoJsonPoint.properties.WG.toFixed(0)}</span>`
                 })
                 // aws = Automatische Wetterstationen
                 // span : Inhalt wird einfach auf Karte geschrieben (mit style Farbeninhalt im CSS-Stil)
                 // Formatierung im main.css
                 // toFixed(1): Nachkommastellen > Problem: undefined
+                // arrow aus fontawesome.com <i class="fas fa-arrow-up"></i> 
             }).bindPopup(popup);
         }
     }).addTo(overlays.wind);
