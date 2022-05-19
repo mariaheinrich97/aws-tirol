@@ -53,7 +53,7 @@ L.control.scale({
 L.control.fullscreen().addTo(map);
 
 // Layer beim Laden der Seite als erstes anzeigen - da wir anfangs daraan gearbeitet haben
-overlays.snowheight.addTo(map);
+overlays.wind.addTo(map);
 
 // Farben nach Wert und Schwellen ermitteln
 let getColor = function (value, ramp) {
@@ -88,6 +88,7 @@ let drawStations = function (geojson) {
     }).addTo(overlays.stations);
 }
 
+//Temperatur
 let drawTemperature = function (geojson) {
     L.geoJSON(geojson, {
         filter: function (geoJsonPoint) {
@@ -125,7 +126,6 @@ let drawTemperature = function (geojson) {
         }
     }).addTo(overlays.temperature);
 }
-
 //Schneehöhen
 let drawSnowheight = function (geojson) {
     L.geoJSON(geojson, {
@@ -164,7 +164,44 @@ let drawSnowheight = function (geojson) {
         }
     }).addTo(overlays.snowheight);
 }
+//Wind
+let drawWind = function (geojson) {
+    L.geoJSON(geojson, {
+        filter: function (geoJsonPoint) {
+            if (geoJsonPoint.properties.WG >= 0 && geoJsonPoint.properties.WG < 1500) {
+                return true;
+            }
+        },
+        pointToLayer: function (geoJsonPoint, latlng) {
+            let popup = `
+            <strong>Name</strong>: ${geoJsonPoint.properties.name}<br>
+            <strong>Meereshöhe</strong>: ${geoJsonPoint.geometry.coordinates[2]} m üNN
+        `
+            // Farbe aufrufen auf getColor (s.oben) für jeden wert die passende Farbe
+            let color = getColor(
+                geoJsonPoint.properties.WG,
+                COLORS.wind,
+            );
+            //console.log(geoJsonPoint.properties.HS, color);
 
+            // Marker nur, damit ich weiß, wo der Marker genau sitzt
+            //L.marker(latlng).addTo(map);
+
+            // divIcon 
+
+            return L.marker(latlng, {
+                icon: L.divIcon({
+                    className: "aws-div-icon",
+                    html: `<span style = "background-color: ${color}">${geoJsonPoint.properties.WG.toFixed(1)}</span>`
+                })
+                // aws = Automatische Wetterstationen
+                // span : Inhalt wird einfach auf Karte geschrieben (mit style Farbeninhalt im CSS-Stil)
+                // Formatierung im main.css
+                // toFixed(1): Nachkommastellen > Problem: undefined
+            }).bindPopup(popup);
+        }
+    }).addTo(overlays.wind);
+}
 
 // Wetterstationen
 // async function -Ausführung, wenn alle Daten geladen wurden
@@ -176,6 +213,7 @@ async function loadData(url) {
     drawStations(geojson);
     drawTemperature(geojson);
     drawSnowheight(geojson);
+    drawWind(geojson);
 }
 loadData("https://static.avalanche.report/weather_stations/stations.geojson");
 
