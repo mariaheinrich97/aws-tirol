@@ -56,7 +56,7 @@ L.control.fullscreen().addTo(map);
 overlays.temperature.addTo(map);
 
 // Farben nach Wert und Schwellen ermitteln
-let getColor = function(value, ramp) {
+let getColor = function (value, ramp) {
     console.log(value, ramp);
     for (let rule of ramp) {
         console.log(rule);
@@ -100,6 +100,13 @@ let drawTemperature = function (geojson) {
             <strong>Name</strong>: ${geoJsonPoint.properties.name}<br>
             <strong>Meereshöhe</strong>: ${geoJsonPoint.geometry.coordinates[2]} m üNN
         `
+            // Farbe aufrufen auf getColor (s.oben) für jeden wert die passende Farbe
+            let color = getColor(
+                geoJsonPoint.properties.LT,
+                COLORS.temperature,
+            );
+            console.log(geoJsonPoint.properties.LT, color);
+
             // divIcon 
             return L.marker(latlng, {
                 icon: L.divIcon({
