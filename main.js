@@ -111,10 +111,10 @@ let drawTemperature = function (geojson) {
             return L.marker(latlng, {
                 icon: L.divIcon({
                     className: "aws-div-icon",
-                    html: `<span>${geoJsonPoint.properties.LT.toFixed(1)}</span>`
+                    html: `<span style = "background-color: ${color}">${geoJsonPoint.properties.LT.toFixed(1)}</span>`
                 })
                 // aws = Automatische Wetterstationen
-                // span : Inhalt wird einfach auf Karte geschrieben
+                // span : Inhalt wird einfach auf Karte geschrieben (mit style Farbeninhalt im CSS-Stil)
                 // Formatierung im main.css
                 // toFixed(1): Nachkommastellen > Problem: undefined
             }).bindPopup(popup);
