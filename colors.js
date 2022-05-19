@@ -73,6 +73,11 @@ temperature: [
 
 snowheight: [
     {
+        min: 0,
+        max: 1,
+        color: "#ffffb2"
+    },
+    {
         min: 1,
         max: 10,
         color: "#ffffb2"
@@ -109,7 +114,7 @@ snowheight: [
     },
     {
         min: 400,
-        max: 1000,
+        max: 1500,
         color: "#cd0feb"
     }, 
 ]
