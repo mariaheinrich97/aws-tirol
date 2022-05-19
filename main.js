@@ -130,7 +130,7 @@ let drawTemperature = function (geojson) {
 let drawSnowheight = function (geojson) {
     L.geoJSON(geojson, {
         filter: function (geoJsonPoint) {
-            if (geoJsonPoint.properties.HS > 0 && geoJsonPoint.properties.HS < 400) {
+            if (geoJsonPoint.properties.HS >= 0 && geoJsonPoint.properties.HS < 1500) {
                 return true;
             }
         },
