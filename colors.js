@@ -75,7 +75,7 @@ snowheight: [
     {
         min: 0,
         max: 1,
-        color: "#ffffb2"
+        color: "#fff"
     },
     {
         min: 1,
