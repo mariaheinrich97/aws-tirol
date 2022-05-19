@@ -20,17 +20,17 @@ temperature: [
     {
         min: -15,
         max: -10,
-        color: "#9f80ff"
+        color: "#1380ff"
     },
     {
         min: -10,
         max: -5,
-        color: "#9f80ff"
+        color: "#19cdff"
     },
     {
         min: -5,
         max: 0,
-        color: "#9f80ff"
+        color: "##8fffff"
     },
     {
         min: 0,
@@ -71,6 +71,6 @@ temperature: [
  // Rechtsklick "Untersuchen"   
 ]
 }
-console.log(colors);
+console.log(COLORS);
 
 
