@@ -52,7 +52,7 @@ L.control.scale({
 // Fullscreen control
 L.control.fullscreen().addTo(map);
 
-// Wetterstationslayer beim Laden anzeigen - da wir anfangs daraan gearbeitet haben
+// Layer beim Laden der Seite als erstes anzeigen - da wir anfangs daraan gearbeitet haben
 overlays.temperature.addTo(map);
 
 // Wetterstationen mit Icons und Popups
@@ -67,6 +67,8 @@ let drawStations = function(geojson) {
             return L.marker(latlng, {
                 icon: L.icon({
                     iconUrl: "icons/wifi.png",
+                    iconAnchor: [16, 37],
+                    popupAnchor: [0, -37]
                 })
             }).bindPopup(popup);
         }
@@ -84,6 +86,8 @@ let drawTemperature = function(geojson) {
             return L.marker(latlng, {
                 icon: L.icon({
                     iconUrl: "icons/wifi.png",
+                    iconAnchor: [16, 37],
+                    popupAnchor: [0, -37]
                 })
             }).bindPopup(popup);
         }
