@@ -71,6 +71,6 @@ temperature: [
  // Rechtsklick "Untersuchen"   
 ]
 }
-console.log(COLORS);
+//console.log(COLORS);
 
 
