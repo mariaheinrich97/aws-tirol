@@ -52,16 +52,11 @@ L.control.scale({
 // Fullscreen control
 L.control.fullscreen().addTo(map);
 
-// Wetterstationslayer beim Laden anzeigen
+// Wetterstationslayer beim Laden anzeigen - da wir anfangs daraan gearbeitet haben
 overlays.stations.addTo(map);
 
-// Wetterstationen
-async function loadData(url) {
-    let response = await fetch(url);
-    let geojson = await response.json();
-
-    //AUFGABE START
-    //console.log(url);
+// Wetterstationen mit Icons und Popups
+let drawStations = function(geojson) {
 
     L.geoJSON(geojson, {
         pointToLayer: function (geoJsonPoint, latlng) {
@@ -76,8 +71,16 @@ async function loadData(url) {
             }).bindPopup(popup);
         }
     }).addTo(overlays.stations);
+}
 
-    //AUFGABE ENDE
+// Wetterstationen
+// async function -Ausführung, wenn alle Daten geladen wurden
+
+async function loadData(url) {
+    let response = await fetch(url);
+    let geojson = await response.json();
+drawStations(geojson);
+
 
     // Wetterstationen mit Icons und Popups implementieren
 }
