@@ -55,6 +55,19 @@ L.control.fullscreen().addTo(map);
 // Layer beim Laden der Seite als erstes anzeigen - da wir anfangs daraan gearbeitet haben
 overlays.temperature.addTo(map);
 
+// Farben nach Wert und Schwellen ermitteln
+let getColor = function(value, ramp) {
+    console.log(value, ramp);
+    for (let rule of ramp) {
+        console.log(rule);
+        if (value >= rule.min && value < rule.max) {
+            return rule.color;
+        }
+    }
+};
+console.log(getColor(-40, COLORS.temperature))
+// temperature in colors.js definiert
+
 // Wetterstationen mit Icons und Popups
 let drawStations = function (geojson) {
 
