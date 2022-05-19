@@ -53,7 +53,7 @@ L.control.scale({
 L.control.fullscreen().addTo(map);
 
 // Layer beim Laden der Seite als erstes anzeigen - da wir anfangs daraan gearbeitet haben
-overlays.temperature.addTo(map);
+overlays.snowheight.addTo(map);
 
 // Farben nach Wert und Schwellen ermitteln
 let getColor = function (value, ramp) {
@@ -65,7 +65,7 @@ let getColor = function (value, ramp) {
         }
     }
 };
-console.log(getColor(-40, COLORS.temperature))
+//console.log(getColor(-40, COLORS.temperature))
 // temperature in colors.js definiert
 
 // Wetterstationen mit Icons und Popups
@@ -105,11 +105,11 @@ let drawTemperature = function (geojson) {
                 geoJsonPoint.properties.LT,
                 COLORS.temperature,
             );
-            console.log(geoJsonPoint.properties.LT, color);
-            
+            //console.log(geoJsonPoint.properties.LT, color);
+
             // Marker nur, damit ich weiß, wo der Marker genau sitzt
             //L.marker(latlng).addTo(map);
-            
+
             // divIcon 
 
             return L.marker(latlng, {
@@ -126,6 +126,46 @@ let drawTemperature = function (geojson) {
     }).addTo(overlays.temperature);
 }
 
+//Schneehöhen
+let drawSnowheight = function (geojson) {
+    L.geoJSON(geojson, {
+        filter: function (geoJsonPoint) {
+            if (geoJsonPoint.properties.HS > 0 && geoJsonPoint.properties.HS < 400) {
+                return true;
+            }
+        },
+        pointToLayer: function (geoJsonPoint, latlng) {
+            let popup = `
+            <strong>Name</strong>: ${geoJsonPoint.properties.name}<br>
+            <strong>Meereshöhe</strong>: ${geoJsonPoint.geometry.coordinates[2]} m üNN
+        `
+            // Farbe aufrufen auf getColor (s.oben) für jeden wert die passende Farbe
+            let color = getColor(
+                geoJsonPoint.properties.HS,
+                COLORS.snowheight,
+            );
+            //console.log(geoJsonPoint.properties.HS, color);
+
+            // Marker nur, damit ich weiß, wo der Marker genau sitzt
+            //L.marker(latlng).addTo(map);
+
+            // divIcon 
+
+            return L.marker(latlng, {
+                icon: L.divIcon({
+                    className: "aws-div-icon",
+                    html: `<span style = "background-color: ${color}">${geoJsonPoint.properties.HS.toFixed(1)}</span>`
+                })
+                // aws = Automatische Wetterstationen
+                // span : Inhalt wird einfach auf Karte geschrieben (mit style Farbeninhalt im CSS-Stil)
+                // Formatierung im main.css
+                // toFixed(1): Nachkommastellen > Problem: undefined
+            }).bindPopup(popup);
+        }
+    }).addTo(overlays.snowheight);
+}
+
+
 // Wetterstationen
 // async function -Ausführung, wenn alle Daten geladen wurden
 
@@ -135,6 +175,7 @@ async function loadData(url) {
     // Wetterstationen, Temperature, .... aufrufen - sonst wird die Funktion nicht aufgerufen und angezeigt
     drawStations(geojson);
     drawTemperature(geojson);
+    drawSnowheight(geojson);
 }
 loadData("https://static.avalanche.report/weather_stations/stations.geojson");
 
