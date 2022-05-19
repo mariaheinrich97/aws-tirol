@@ -88,10 +88,10 @@ let drawTemperature = function(geojson) {
                 icon: L.divIcon({
                     className: "aws-div-icon",
                     html: `<span>${geoJsonPoint.properties.LT}</span>`
-
                 })
                 // aws = Automatische Wetterstationen
-                // span 
+                // span : Inhalt wird einfach auf Karte geschrieben
+                // Formatierung im main.css
             }).bindPopup(popup);
         }
     }).addTo(overlays.temperature);
