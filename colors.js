@@ -155,7 +155,47 @@ wind: [
         color: "#ff3232"
     },
 ],
+humidity: [
+    {
+        min: 0,
+        max: 30,
+        color: rgb(238, 238, 238)
+    },
+    {
+        min: 30,
+        max: 40,
+        color: rgb(221, 221, 221)
+    },
+    {
+        min: 40,
+        max: 50,
+        color: rgb(238, 238, 238)
+    },
+    {
+        min: 50,
+        max: 60,
+        color: rgb(198, 201, 206)
+    },
+    {
+        min: 60,
+        max: 70,
+        color: rgb(187, 187, 187)
+    },
+    {
+        min: 70,
+        max: 80,
+        color: rgb(170, 170, 204)
+    },
+    {
+        min: 80,
+        max: 90,
+        color: rgb(153, 152, 221)
+    },
+    {
+        min: 90,
+        max: 400,
+        color: rgb(118, 119, 225)
+    },
+],
 }
 //console.log(COLORS);
-
-
