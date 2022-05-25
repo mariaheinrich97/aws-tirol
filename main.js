@@ -104,6 +104,8 @@ let drawTemperature = function (geojson) {
         },
         pointToLayer: function (geoJsonPoint, latlng) {
             let popup = `
+            <strong>Relative Luftfeuchtigkeit</strong><br><br>
+            <strong>Wetterstation</strong><br>
             <strong>Name</strong>: ${geoJsonPoint.properties.name}<br>
             <strong>Meereshöhe</strong>: ${geoJsonPoint.geometry.coordinates[2]} m üNN
         `
@@ -132,6 +134,7 @@ let drawTemperature = function (geojson) {
         }
     }).addTo(overlays.temperature);
 }
+
 //Schneehöhen
 let drawSnowheight = function (geojson) {
     L.geoJSON(geojson, {
@@ -142,6 +145,8 @@ let drawSnowheight = function (geojson) {
         },
         pointToLayer: function (geoJsonPoint, latlng) {
             let popup = `
+            <strong>Relative Luftfeuchtigkeit</strong><br><br>
+            <strong>Wetterstation</strong><br>
             <strong>Name</strong>: ${geoJsonPoint.properties.name}<br>
             <strong>Meereshöhe</strong>: ${geoJsonPoint.geometry.coordinates[2]} m üNN
         `
@@ -170,6 +175,7 @@ let drawSnowheight = function (geojson) {
         }
     }).addTo(overlays.snowheight);
 }
+
 //Wind
 let drawWind = function (geojson) {
     L.geoJSON(geojson, {
@@ -181,6 +187,8 @@ let drawWind = function (geojson) {
         },
         pointToLayer: function (geoJsonPoint, latlng) {
             let popup = `
+            <strong>Relative Luftfeuchtigkeit</strong><br><br>
+            <strong>Wetterstation</strong><br>
             <strong>Stationsname</strong>: ${geoJsonPoint.properties.name}<br>
             <strong>Meereshöhe</strong>: ${geoJsonPoint.geometry.coordinates[2]} m üNN
         `
@@ -226,6 +234,8 @@ let drawHumidity = function (geojson) {
         },
         pointToLayer: function (geoJsonPoint, latlng) {
             let popup = `
+            <strong>Relative Luftfeuchtigkeit</strong><br><br>
+            <strong>Wetterstation</strong><br>
             <strong>Name</strong>: ${geoJsonPoint.properties.name}<br>
             <strong>Meereshöhe</strong>: ${geoJsonPoint.geometry.coordinates[2]} m üNN
         `
@@ -234,22 +244,12 @@ let drawHumidity = function (geojson) {
                 geoJsonPoint.properties.RH,
                 COLORS.humidity,
             );
-            //console.log(geoJsonPoint.properties.HS, color);
-
-            // Marker nur, damit ich weiß, wo der Marker genau sitzt
-            //L.marker(latlng).addTo(map);
-
-            // divIcon 
 
             return L.marker(latlng, {
                 icon: L.divIcon({
                     className: "aws-div-icon",
-                    html: `<span style = "background-color: ${color}">${geoJsonPoint.properties.HS.toFixed(1)}</span>`
+                    html: `<span style = "background-color: ${color}">${geoJsonPoint.properties.RH.toFixed(1)}</span>`
                 })
-                // aws = Automatische Wetterstationen
-                // span : Inhalt wird einfach auf Karte geschrieben (mit style Farbeninhalt im CSS-Stil)
-                // Formatierung im main.css
-                // toFixed(1): Nachkommastellen > Problem: undefined
             }).bindPopup(popup);
         }
     }).addTo(overlays.humidity);
@@ -265,7 +265,7 @@ async function loadData(url) {
     drawTemperature(geojson);
     drawSnowheight(geojson);
     drawWind(geojson);
-    drawHumidity(geoson);
+    drawHumidity(geojson);
 }
 loadData("https://static.avalanche.report/weather_stations/stations.geojson");
 
