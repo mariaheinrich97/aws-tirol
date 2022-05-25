@@ -15,7 +15,7 @@ let startLayer = L.tileLayer("https://static.avalanche.report/tms/{z}/{x}/{y}.we
 let overlays = {
     stations: L.featureGroup(),
     temperature: L.featureGroup(),
-    precipitation: L.featureGroup(),
+    humidity: L.featureGroup(),
     snowheight: L.featureGroup(),
     wind: L.featureGroup(),
 };
@@ -36,7 +36,7 @@ let layerControl = L.control.layers({
 }, {
     "Wetterstationen": overlays.stations,
     "Temperatur": overlays.temperature,
-    "Niederschlag": overlays.precipitation,
+    "Relative Luftfeuchtigkeit": overlays.humidity,
     "Schneehöhe": overlays.snowheight,
     "Wind": overlays.wind
 }).addTo(map);
@@ -53,7 +53,7 @@ L.control.scale({
 L.control.fullscreen().addTo(map);
 
 // Layer beim Laden der Seite als erstes anzeigen - da wir anfangs daraan gearbeitet haben
-overlays.wind.addTo(map);
+overlays.humidity.addTo(map);
 
 // Farben nach Wert und Schwellen ermitteln
 let getColor = function (value, ramp) {
@@ -210,9 +210,47 @@ let drawWind = function (geojson) {
     }).addTo(overlays.wind);
 }
 
+//Niederschlag
+let drawHumidity = function (geojson) {
+    L.geoJSON(geojson, {
+        filter: function (geoJsonPoint) {
+            if (geoJsonPoint.properties.RH >= 0 && geoJsonPoint.properties.RH < 1500) {
+                return true;
+            }
+        },
+        pointToLayer: function (geoJsonPoint, latlng) {
+            let popup = `
+            <strong>Name</strong>: ${geoJsonPoint.properties.name}<br>
+            <strong>Meereshöhe</strong>: ${geoJsonPoint.geometry.coordinates[2]} m üNN
+        `
+            // Farbe aufrufen auf getColor (s.oben) für jeden wert die passende Farbe
+            let color = getColor(
+                geoJsonPoint.properties.RH,
+                COLORS.humidity,
+            );
+            //console.log(geoJsonPoint.properties.HS, color);
+
+            // Marker nur, damit ich weiß, wo der Marker genau sitzt
+            //L.marker(latlng).addTo(map);
+
+            // divIcon 
+
+            return L.marker(latlng, {
+                icon: L.divIcon({
+                    className: "aws-div-icon",
+                    html: `<span style = "background-color: ${color}">${geoJsonPoint.properties.HS.toFixed(1)}</span>`
+                })
+                // aws = Automatische Wetterstationen
+                // span : Inhalt wird einfach auf Karte geschrieben (mit style Farbeninhalt im CSS-Stil)
+                // Formatierung im main.css
+                // toFixed(1): Nachkommastellen > Problem: undefined
+            }).bindPopup(popup);
+        }
+    }).addTo(overlays.humidity);
+}
+
 // Wetterstationen
 // async function -Ausführung, wenn alle Daten geladen wurden
-
 async function loadData(url) {
     let response = await fetch(url);
     let geojson = await response.json();
@@ -225,3 +263,6 @@ async function loadData(url) {
 loadData("https://static.avalanche.report/weather_stations/stations.geojson");
 
 // Draw Temperatur als Kopie der Draw Stations
+
+
+
