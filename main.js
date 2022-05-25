@@ -53,7 +53,7 @@ L.control.scale({
 L.control.fullscreen().addTo(map);
 
 // Layer beim Laden der Seite als erstes anzeigen - da wir anfangs daraan gearbeitet haben
-overlays.humidity.addTo(map);
+overlays.stations.addTo(map);
 
 // Farben nach Wert und Schwellen ermitteln
 let getColor = function (value, ramp) {
