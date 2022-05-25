@@ -216,7 +216,7 @@ let drawWind = function (geojson) {
     }).addTo(overlays.wind);
 }
 
-//Niederschlag
+//rel. Luftfeuchtigkeit
 let drawHumidity = function (geojson) {
     L.geoJSON(geojson, {
         filter: function (geoJsonPoint) {
@@ -265,6 +265,7 @@ async function loadData(url) {
     drawTemperature(geojson);
     drawSnowheight(geojson);
     drawWind(geojson);
+    drawHumidity(geoson);
 }
 loadData("https://static.avalanche.report/weather_stations/stations.geojson");
 
