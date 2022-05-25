@@ -105,7 +105,7 @@ let drawTemperature = function (geojson) {
         pointToLayer: function (geoJsonPoint, latlng) {
             let popup = `
             <strong>Relative Luftfeuchtigkeit</strong><br><br>
-            <strong>Wetterstation</strong><br>
+            <strong>Wetterstation:</strong><br>
             <strong>Name</strong>: ${geoJsonPoint.properties.name}<br>
             <strong>Meereshöhe</strong>: ${geoJsonPoint.geometry.coordinates[2]} m üNN
         `
@@ -146,7 +146,7 @@ let drawSnowheight = function (geojson) {
         pointToLayer: function (geoJsonPoint, latlng) {
             let popup = `
             <strong>Relative Luftfeuchtigkeit</strong><br><br>
-            <strong>Wetterstation</strong><br>
+            <strong>Wetterstation:</strong><br>
             <strong>Name</strong>: ${geoJsonPoint.properties.name}<br>
             <strong>Meereshöhe</strong>: ${geoJsonPoint.geometry.coordinates[2]} m üNN
         `
@@ -188,7 +188,7 @@ let drawWind = function (geojson) {
         pointToLayer: function (geoJsonPoint, latlng) {
             let popup = `
             <strong>Relative Luftfeuchtigkeit</strong><br><br>
-            <strong>Wetterstation</strong><br>
+            <strong>Wetterstation:</strong><br>
             <strong>Stationsname</strong>: ${geoJsonPoint.properties.name}<br>
             <strong>Meereshöhe</strong>: ${geoJsonPoint.geometry.coordinates[2]} m üNN
         `
@@ -235,7 +235,7 @@ let drawHumidity = function (geojson) {
         pointToLayer: function (geoJsonPoint, latlng) {
             let popup = `
             <strong>Relative Luftfeuchtigkeit</strong><br><br>
-            <strong>Wetterstation</strong><br>
+            <strong>Wetterstation:</strong><br>
             <strong>Name</strong>: ${geoJsonPoint.properties.name}<br>
             <strong>Meereshöhe</strong>: ${geoJsonPoint.geometry.coordinates[2]} m üNN
         `
