@@ -75,7 +75,13 @@ let drawStations = function (geojson) {
         pointToLayer: function (geoJsonPoint, latlng) {
             let popup = `
             <strong>Name</strong>: ${geoJsonPoint.properties.name}<br>
-            <strong>Meereshöhe</strong>: ${geoJsonPoint.geometry.coordinates[2]} m üNN
+            <strong>Meereshöhe</strong>: ${geoJsonPoint.geometry.coordinates[2]} m üNN <br>
+            <hs>
+            Lufttemperatur = ${geoJsonPoint.properties.LT}°C
+            Schneehöhe = ${geoJsonPoint.properties.HS} cm
+            Windgeschwindigeit = ${geoJsonPoint.properties.WG} km/h 
+            Windrichtung = ${geoJsonPoint.properties.WR}°
+            Relative Luftfeuchtigkeit = ${geoJsonPoint.properties.RH} %
         `
             return L.marker(latlng, {
                 icon: L.icon({
@@ -168,8 +174,8 @@ let drawSnowheight = function (geojson) {
 let drawWind = function (geojson) {
     L.geoJSON(geojson, {
         filter: function (geoJsonPoint) {
-            if (geoJsonPoint.properties.WG >= 0 && geoJsonPoint.properties.WG < 1500 && 
-                geoJsonPoint.properties.WR >= 0 &&geoJsonPoint.properties.WR <= 360) {
+            if (geoJsonPoint.properties.WG >= 0 && geoJsonPoint.properties.WG < 1500 &&
+                geoJsonPoint.properties.WR >= 0 && geoJsonPoint.properties.WR <= 360) {
                 return true;
             }
         },
@@ -263,6 +269,3 @@ async function loadData(url) {
 loadData("https://static.avalanche.report/weather_stations/stations.geojson");
 
 // Draw Temperatur als Kopie der Draw Stations
-
-
-
