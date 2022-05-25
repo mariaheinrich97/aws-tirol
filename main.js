@@ -38,7 +38,7 @@ let layerControl = L.control.layers({
     "Temperatur": overlays.temperature,
     "Relative Luftfeuchtigkeit": overlays.humidity,
     "Schneehöhe": overlays.snowheight,
-    "Wind": overlays.wind
+    "Wind": overlays.wind,
 }).addTo(map);
 
 // Layer control ausklappen
@@ -255,7 +255,18 @@ let drawHumidity = function (geojson) {
     }).addTo(overlays.humidity);
 }
 
-// Wetterstationen
+//Rainviewer einbauen
+L.control.rainviewer({ 
+    position: 'bottomleft',
+    nextButtonText: '>',
+    playStopButtonText: 'Play/Stop',
+    prevButtonText: '<',
+    positionSliderLabelText: "Hour:",
+    opacitySliderLabelText: "Opacity:",
+    animationInterval: 500,
+    opacity: 0.5
+}).addTo(map);
+
 // async function -Ausführung, wenn alle Daten geladen wurden
 async function loadData(url) {
     let response = await fetch(url);
@@ -267,6 +278,8 @@ async function loadData(url) {
     drawWind(geojson);
     drawHumidity(geojson);
 }
+
 loadData("https://static.avalanche.report/weather_stations/stations.geojson");
+
 
 // Draw Temperatur als Kopie der Draw Stations
