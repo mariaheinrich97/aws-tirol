@@ -78,8 +78,8 @@ let drawStations = function (geojson) {
             <strong>Meereshöhe</strong>: ${geoJsonPoint.geometry.coordinates[2]} m üNN <br><br>
             <strong>Lufttemperatur</strong> = ${geoJsonPoint.properties.LT}°C <br>
             <strong> Schneehöhe</strong> = ${geoJsonPoint.properties.HS} cm <br>
-            <strong>Windgeschwindigeit</strong> = ${geoJsonPoint.properties.WG*3.6} km/h <br>
-            <strong>Windrichtung</strong> = ${geoJsonPoint.properties.WR}° <br>
+            <strong>Windgeschwindigeit</strong> = ${(geoJsonPoint.properties.WG*3.6).toFixed(1)} km/h <br>
+            <strong>Windrichtung</strong> = ${geoJsonPoint.properties.WR} ° <br>
             <strong>Relative Luftfeuchtigkeit</strong> = ${geoJsonPoint.properties.RH} % <br>
             <a href="https://wiski.tirol.gv.at/lawine/grafiken/1100/standard/dreitage/${geoJsonPoint.properties.plot}.png">Weblink</a>
         `
