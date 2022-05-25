@@ -75,13 +75,13 @@ let drawStations = function (geojson) {
         pointToLayer: function (geoJsonPoint, latlng) {
             let popup = `
             <strong>Name</strong>: ${geoJsonPoint.properties.name}<br>
-            <strong>Meereshöhe</strong>: ${geoJsonPoint.geometry.coordinates[2]} m üNN <br>
-            <hs>
-            Lufttemperatur = ${geoJsonPoint.properties.LT}°C
-            Schneehöhe = ${geoJsonPoint.properties.HS} cm
-            Windgeschwindigeit = ${geoJsonPoint.properties.WG} km/h 
-            Windrichtung = ${geoJsonPoint.properties.WR}°
-            Relative Luftfeuchtigkeit = ${geoJsonPoint.properties.RH} %
+            <strong>Meereshöhe</strong>: ${geoJsonPoint.geometry.coordinates[2]} m üNN <br><br>
+            <strong>Lufttemperatur</strong> = ${geoJsonPoint.properties.LT}°C <br>
+            <strong> Schneehöhe</strong> = ${geoJsonPoint.properties.HS} cm <br>
+            <strong>Windgeschwindigeit</strong> = ${geoJsonPoint.properties.WG*3.6} km/h <br>
+            <strong>Windrichtung</strong> = ${geoJsonPoint.properties.WR}° <br>
+            <strong>Relative Luftfeuchtigkeit</strong> = ${geoJsonPoint.properties.RH} % <br>
+            <a href="https://wiski.tirol.gv.at/lawine/grafiken/1100/standard/dreitage/${geoJsonPoint.properties.plot}.png">Weblink</a>
         `
             return L.marker(latlng, {
                 icon: L.icon({
@@ -196,7 +196,7 @@ let drawWind = function (geojson) {
 
             // divIcon 
             let deg = geoJsonPoint.properties.WR;
-            console.log(deg);
+            //console.log(deg);
 
             return L.marker(latlng, {
                 icon: L.divIcon({
